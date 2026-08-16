@@ -18,7 +18,7 @@ This tracking system provides real-time recovery telemetry, multi-constellation 
 
 ## 🛠️ Hardware Architecture & Specifications
 
-### 1. Micro Controller Unit (MCU)
+### 1. MicroController Unit (MCU)
 * **STM32F446RET6:** 32-bit ARM Cortex-M4 @ 180 MHz with DSP and FPU.
 * **Interfaces:** On-board SWD programming/debugging interface, external crystal oscillators (HSE/LSE), and hardware reset circuitry.
 
