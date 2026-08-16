@@ -39,7 +39,7 @@ This tracking system provides real-time recovery telemetry, multi-constellation 
 
 ### 5. Power Management & Hardware Diagnostics
 * **Step-Down Switching Regulator:** **AP63205** (5V / 2A high-efficiency synchronous buck converter).
-* **Linear Low-Dropout Regulator:** **AMS1117-3.3** (Clean 3.3V power rail for MCU, sensors, and peripherals).
+* **Linear Low-Dropout Regulator:** **AMS1117-3.3** (Clean 3.3V power rail for MCU, sensors, and peripherals; High PSRR).
 * **Current & Voltage Sensing:** High-side current sensing via **INA139NA** current shunt monitor paired with a precision resistor divider for continuous battery diagnostics.
 * **RTC & Backup Power:** Dedicated external battery line (`V_BCKP`) for GPS ephemeris retention and hot-start support.
 * **Status Indicators:** Transistor-driven audible buzzer along with multi-color diagnostic LEDs for system, GPS fix, and telemetry status.
