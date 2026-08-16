@@ -1,0 +1,4 @@
+Record=TopLevelDocument|FileName=CONNECTORS.SchDoc|SheetNumber=3
+Record=NoMainPathDocument|SourceDocument=CONNECTORS.SchDoc|FileName=MCU.SchDoc|SheetNumber=1
+Record=NoMainPathDocument|SourceDocument=CONNECTORS.SchDoc|FileName=PERIPHERALS.SchDoc|SheetNumber=2
+Record=NoMainPathDocument|SourceDocument=CONNECTORS.SchDoc|FileName=POWER.SchDoc|SheetNumber=4
