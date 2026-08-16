@@ -1,6 +1,6 @@
 # 🛰️ Dual-LoRa High-Altitude GNSS Tracking System (IREC 2025)
 
-An avionic-grade, dual-band telemetry and GNSS tracking board developed for high-altitude sounding rockets and competitive aerospace payloads (IREC 2025).
+An avionic-grade, dual-band telemetry and GNSS tracking board developed for high-altitude sounding rockets and aerospace payload challenges (IREC 2025).
 
 ---
 
@@ -10,46 +10,47 @@ An avionic-grade, dual-band telemetry and GNSS tracking board developed for high
 
 ---
 
-## 📌 Genel Bakış (Overview)
+## 📌 Project Overview
 
-This board is designed to provide real-time recovery telemetry, positional coordinates, barometric altitude, and power diagnostic monitoring over redundant long-range RF links during sounding rocket flights.
-
----
-
-## 🛠️ Donanım Mimarisi & Teknik Özellikler (Hardware Specs)
-
-* **Ana İşlemci (MCU):**
-  * **STM32F446RET6** (ARM Cortex-M4 @ 180 MHz, DSP + FPU)
-  * Dedicated SWD programming/debugging interface and hardware reset circuitry
-
-* **RF & Telemetri Haberleşmesi (Dual-Band LoRa):**
-  * **LoRa Modül 1:** Ebyte **E22-900M33S** (SPI Arayüzü, 868/915 MHz, +33 dBm / 2W çıkış gücü)
-  * **LoRa Modül 2:** Ebyte **E22-400T37S** (UART Arayüzü, 433/470 MHz, +37 dBm / 5W yüksek güç desteği)
-  * Bağımsız harici SMA/U.FL RF anten konnektörleri
-
-* **Sensörler ve Konumlandırma (Sensors & Navigation):**
-  * **GNSS Modülü:** Quectel **L86 GPS** (Dahili yama anten + harici aktif anten desteği & PPS çıkışı)
-  * **Barometre / Altimetre:** Bosch Sensortec **BME280** (I2C haberleşmeli yüksek hassasiyetli basınç/irtifa/sıcaklık sensörü)
-
-* **Veri Depolama ve Arayüzler (Storage & Interfaces):**
-  * **Flash Bellek:** **W25Q256JV** (256 Mbit / 32 MB High-Speed SPI NOR Flash)
-  * **MicroSD Kart Yuvası:** SPI modunda çalışan tam korumalı SD kart yuvası
-  * **USB-UART Arayüzü:** **FT232RNL** ile doğrudan USB üzerinden telemetri ve hata ayıklama
-
-* **Güç Yönetimi ve Sensörler (Power Architecture & Diagnostics):**
-  * **Buck Regülatör:** **AP63205** (5V / 2A Yüksek verimli senkron anahtarlamalı regülatör)
-  * **LDO Regülatör:** **AMS1117-3.3** (MCU, sensörler ve çevre birimleri için temiz 3.3V rayı)
-  * **Akım & Gerilim İzleme:** **INA139NA** (Yüksek taraf akım algılama şönt amplifikatörü + direnç gerilim bölücü ile batarya takibi)
-  * **Yedek Güç (RTC / Ephemeris Backup):** L86 GPS için harici batarya destek hattı (`V_BCKP`)
-  * **Sesli & Görsel İkaz:** MOSFET sürücülü buzzer ve durum bildirim LED'leri
+This tracking system provides real-time recovery telemetry, multi-constellation positional coordinates, barometric altitude, and full power diagnostics over redundant long-range RF links during sounding rocket flights.
 
 ---
 
-## 📁 Proje Dosya Yapısı (Repository Structure)
+## 🛠️ Hardware Architecture & Specifications
+
+### 1. Main Processing Unit (MCU)
+* **STM32F446RET6:** 32-bit ARM Cortex-M4 @ 180 MHz with DSP and FPU.
+* **Interfaces:** On-board SWD programming/debugging interface, external crystal oscillators (HSE/LSE), and hardware reset circuitry.
+
+### 2. Dual-Band RF & Long-Range Telemetry
+* **LoRa Module 1:** Ebyte **E22-900M33S** (SPI Interface, 868/915 MHz, +33 dBm / 2W output power).
+* **LoRa Module 2:** Ebyte **E22-400T37S** (UART Interface, 433/470 MHz, +37 dBm / 5W ultra high-power telemetry link).
+* **RF Output:** Independent 50-ohm matched external antenna connectors for dual-frequency operations.
+
+### 3. Navigation & Environmental Sensors
+* **GNSS Receiver:** Quectel **L86 GPS** (Integrated patch antenna with support for external active antennas, PPS pulse output, and battery backup support).
+* **Barometer / Altimeter:** Bosch Sensortec **BME280** (High-precision I2C digital pressure, altitude, and temperature sensor).
+
+### 4. Data Logging & External Interfaces
+* **NOR Flash Memory:** **W25Q256JV** (256 Mbit / 32 MB High-Speed Quad-SPI / SPI Flash for flight data recording).
+* **MicroSD Card Storage:** Onboard SPI-driven MicroSD socket with card detect for high-capacity telemetry logging.
+* **USB-to-UART Bridge:** FTDI **FT232RNL** via Mini-USB for direct serial debugging and live telemetry readouts.
+* **Auxiliary Headers:** Dedicated GPIO and I2C expansion pin headers.
+
+### 5. Power Management & Hardware Diagnostics
+* **Step-Down Switching Regulator:** **AP63205** (5V / 2A high-efficiency synchronous buck converter).
+* **Linear Low-Dropout Regulator:** **AMS1117-3.3** (Clean 3.3V power rail for MCU, sensors, and peripherals).
+* **Current & Voltage Sensing:** High-side current sensing via **INA139NA** current shunt monitor paired with a precision resistor divider for continuous battery diagnostics.
+* **RTC & Backup Power:** Dedicated external battery line (`V_BCKP`) for GPS ephemeris retention and hot-start support.
+* **Status Indicators:** Transistor-driven audible buzzer along with multi-color diagnostic LEDs for system, GPS fix, and telemetry status.
+
+---
+
+## 📁 Repository Structure
 
 ```text
-├── Altium PROJECT/          # Altium Designer proje dosyaları (.PrjPcb, .PcbDoc)
-├── Altium SCHEMATIC/        # Modüler şematik çizimleri (.SchDoc)
-├── GPS_TRACKER_IREC.pdf     # Tam şematik ve donanım çizim dokümanı
-├── Tracker IREC.png         # Kart önizleme görseli
-└── README.md                # Proje tanıtım ve teknik dokümantasyonu
+├── Altium PROJECT/          # Altium Designer project files (.PrjPcb, .PcbDoc)
+├── Altium SCHEMATIC/        # Modular schematic sheets (.SchDoc)
+├── GPS_TRACKER_IREC.pdf     # Complete schematic and hardware export
+├── Tracker IREC.png         # Hardware render / preview image
+└── README.md                # Project documentation and specifications
